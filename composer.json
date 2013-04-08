@@ -1,23 +1,20 @@
 {
-	"name": "shonm/php-resque-scheduler",
-	"type": "library",
-	"description": "php-resque-scheduler is a PHP port of resque-scheduler, which adds support for scheduling items in the future to Resque.",
-	"authors": [
-		{
-			"name": "Chris Boulton",
-			"email": "chris@bgigcommerce.com"
-		}
-	],
-	"autoload": {
-		"psr-0": {
-			"ResqueScheduler": "lib/"
-		}
-	},
-	"repositories": [
-		{ "type": "git", "url": "https://github.com/chrisboulton/php-resque" }
-	],
-	"require": {
-		"shonm/php-resque": "dev-master",
-		"colinmollenhour/credis": "dev-master"
-	}
+    "name": "shonm/php-resque-scheduler",
+    "type": "library",
+    "description": "php-resque-scheduler is a PHP port of resque-scheduler, which adds support for scheduling items in the future to Resque.",
+    "authors": [
+        {
+            "name": "Chris Boulton",
+            "email": "chris@bgigcommerce.com"
+        }
+    ],
+    "autoload": {
+        "psr-0": {
+            "ResqueScheduler": "lib/"
+        }
+    },
+    "require": {
+        "shonm/php-resque": "dev-master",
+        "colinmollenhour/credis": "dev-master"
+    }
 }
