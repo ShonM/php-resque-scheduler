@@ -1,0 +1,115 @@
+{
+    "hash": "b1e2b8d5a454a26cf7b8f48df56652fe",
+    "packages": [
+        {
+            "name": "colinmollenhour/credis",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/colinmollenhour/credis.git",
+                "reference": "1.2"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/colinmollenhour/credis/zipball/1.2",
+                "reference": "1.2",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.0"
+            },
+            "type": "library",
+            "autoload": {
+                "classmap": [
+                    "Client.php",
+                    "Cluster.php"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Colin Mollenhour",
+                    "email": "colin@mollenhour.com"
+                }
+            ],
+            "description": "Credis is a lightweight interface to the Redis key-value store which wraps the phpredis library when available for better performance.",
+            "homepage": "https://github.com/colinmollenhour/credis",
+            "time": "2013-03-19 02:57:04"
+        },
+        {
+            "name": "shonm/php-resque",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/ShonM/php-resque.git",
+                "reference": "8a6134dac9197a8d2f96d59e4c8e8aaf027e5859"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/ShonM/php-resque/zipball/8a6134dac9197a8d2f96d59e4c8e8aaf027e5859",
+                "reference": "8a6134dac9197a8d2f96d59e4c8e8aaf027e5859",
+                "shasum": ""
+            },
+            "require": {
+                "colinmollenhour/credis": "dev-master",
+                "php": ">=5.3.0"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "3.7.*"
+            },
+            "suggest": {
+                "ebernhardson/fastcgi": "Allows php-resque to execute jobs via php-fpm.",
+                "ext-proctitle": "Allows php-resque to rename the title of UNIX processes to show the status of a worker.",
+                "ext-redis": "Native PHP extension for Redis connectivity. Credis will automatically utilize when available."
+            },
+            "bin": [
+                "bin/resque"
+            ],
+            "type": "library",
+            "autoload": {
+                "psr-0": {
+                    "Resque": "lib"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Chris Boulton",
+                    "email": "chris@bigcommerce.com"
+                }
+            ],
+            "description": "Redis backed library for creating background jobs and processing them later. Based on resque for Ruby.",
+            "homepage": "http://www.github.com/chrisboulton/php-resque/",
+            "keywords": [
+                "background",
+                "job",
+                "redis",
+                "resque"
+            ],
+            "time": "2013-04-06 19:04:05"
+        }
+    ],
+    "packages-dev": [
+
+    ],
+    "aliases": [
+
+    ],
+    "minimum-stability": "stable",
+    "stability-flags": {
+        "shonm/php-resque": 20,
+        "colinmollenhour/credis": 20
+    },
+    "platform": [
+
+    ],
+    "platform-dev": [
+
+    ]
+}

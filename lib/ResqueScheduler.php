@@ -9,6 +9,8 @@
 */
 class ResqueScheduler
 {
+	const VERSION = "1.2-dev";
+	
 	/**
 	 * Enqueue a job in a given number of seconds from now.
 	 *
@@ -223,7 +225,7 @@ class ResqueScheduler
 			$at = self::getTimestamp($at);
 		}
 	
-		$items = Resque::redis()->zrangebyscore('delayed_queue_schedule', '-inf', $at, 'LIMIT', 0, 1);
+		$items = Resque::redis()->zrangebyscore('delayed_queue_schedule', '-inf', $at, array('limit' => array(0, 1)));
 		if (!empty($items)) {
 			return $items[0];
 		}

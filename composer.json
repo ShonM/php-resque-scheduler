@@ -17,6 +17,7 @@
 		{ "type": "git", "url": "https://github.com/chrisboulton/php-resque" }
 	],
 	"require": {
-		"shonm/php-resque": "dev-master"
+		"shonm/php-resque": "dev-master",
+		"colinmollenhour/credis": "dev-master"
 	}
 }
