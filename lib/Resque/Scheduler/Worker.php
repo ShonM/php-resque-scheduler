@@ -2,6 +2,7 @@
 
 namespace Resque\Scheduler;
 
+use Resque\Resque;
 use Resque\Scheduler;
 use Resque\Event;
 
@@ -81,14 +82,17 @@ class Worker
         while ($item = Scheduler::nextItemForTimestamp($timestamp)) {
             $this->log('queueing ' . $item['class'] . ' in ' . $item['queue'] .' [delayed]');
 
+            if (! empty($item['args'])) {
+                $item['args'] = reset($item['args']);
+            }
+
             Event::trigger('beforeDelayedEnqueue', array(
                 'queue' => $item['queue'],
                 'class' => $item['class'],
                 'args'  => $item['args'],
             ));
 
-            $payload = array_merge(array($item['queue'], $item['class']), $item['args']);
-            call_user_func_array('Resque::enqueue', $payload);
+            Resque::enqueue($item['queue'], $item['class'], $item['args']);
         }
     }
 
