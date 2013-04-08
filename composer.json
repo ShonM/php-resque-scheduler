@@ -10,11 +10,14 @@
     ],
     "autoload": {
         "psr-0": {
-            "ResqueScheduler": "lib/"
+            "Resque": "lib"
         }
     },
     "require": {
         "shonm/php-resque": "dev-master",
         "colinmollenhour/credis": "dev-master"
+    },
+    "suggest": {
+        "ext-proctitle": "Allows the renaming the title of UNIX processes to show the status of the scheduler"
     }
 }

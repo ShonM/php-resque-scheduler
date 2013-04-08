@@ -1,13 +1,19 @@
 <?php
+
+namespace Resque\Scheduler;
+
+use Resque\Scheduler;
+use Resque\Event;
+
 /**
- * ResqueScheduler worker to handle scheduling of delayed tasks.
+ * Worker to handle scheduling of delayed tasks.
  *
  * @package		ResqueScheduler
  * @author		Chris Boulton <chris@bigcommerce.com>
  * @copyright	(c) 2012 Chris Boulton
  * @license		http://www.opensource.org/licenses/mit-license.php
  */
-class ResqueScheduler_Worker
+class Worker
 {
     const LOG_NONE = 0;
     const LOG_NORMAL = 1;
@@ -55,7 +61,7 @@ class ResqueScheduler_Worker
      */
     public function handleDelayedItems($timestamp = null)
     {
-        while (($timestamp = ResqueScheduler::nextDelayedTimestamp($timestamp)) !== false) {
+        while (($timestamp = Scheduler::nextDelayedTimestamp($timestamp)) !== false) {
             $this->updateProcLine('Processing Delayed Items');
             $this->enqueueDelayedItemsForTimestamp($timestamp);
         }
@@ -72,10 +78,10 @@ class ResqueScheduler_Worker
     public function enqueueDelayedItemsForTimestamp($timestamp)
     {
         $item = null;
-        while ($item = ResqueScheduler::nextItemForTimestamp($timestamp)) {
+        while ($item = Scheduler::nextItemForTimestamp($timestamp)) {
             $this->log('queueing ' . $item['class'] . ' in ' . $item['queue'] .' [delayed]');
 
-            Resque_Event::trigger('beforeDelayedEnqueue', array(
+            Event::trigger('beforeDelayedEnqueue', array(
                 'queue' => $item['queue'],
                 'class' => $item['class'],
                 'args'  => $item['args'],
@@ -106,7 +112,7 @@ class ResqueScheduler_Worker
     private function updateProcLine($status)
     {
         if (function_exists('setproctitle')) {
-            setproctitle('resque-scheduler-' . ResqueScheduler::VERSION . ': ' . $status);
+            setproctitle('resque-scheduler-' . Scheduler::VERSION . ': ' . $status);
         }
     }
 

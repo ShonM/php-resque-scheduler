@@ -1,13 +1,19 @@
 <?php
+
+namespace Resque;
+
+use Resque\Event;
+use Resque\Scheduler\InvalidTimestampException;
+
 /**
-* ResqueScheduler core class to handle scheduling of jobs in the future.
+* Scheduler core class to handle scheduling of jobs in the future.
 *
-* @package		ResqueScheduler
-* @author		Chris Boulton <chris@bigcommerce.com>
-* @copyright	(c) 2012 Chris Boulton
-* @license		http://www.opensource.org/licenses/mit-license.php
+* @package      ResqueScheduler
+* @author       Chris Boulton <chris@bigcommerce.com>
+* @copyright    (c) 2012 Chris Boulton
+* @license      http://www.opensource.org/licenses/mit-license.php
 */
-class ResqueScheduler
+class Scheduler
 {
     const VERSION = "1.2-dev";
 
@@ -46,7 +52,7 @@ class ResqueScheduler
         $job = self::jobToHash($queue, $class, $args);
         self::delayedPush($at, $job);
 
-        Resque_Event::trigger('afterSchedule', array(
+        Event::trigger('afterSchedule', array(
             'at'    => $at,
             'queue' => $queue,
             'class' => $class,
@@ -110,8 +116,8 @@ class ResqueScheduler
     public static function removeDelayed($queue, $class, $args)
     {
        $destroyed=0;
-       $item=json_encode(self::jobToHash($queue, $class, $args));
-       $redis=Resque::redis();
+       $item = json_encode(self::jobToHash($queue, $class, $args));
+       $redis = Resque::redis();
 
        foreach ($redis->keys('delayed:*') as $key) {
            $key=$redis->removePrefix($key);
@@ -185,9 +191,9 @@ class ResqueScheduler
     /**
      * Convert a timestamp in some format in to a unix timestamp as an integer.
      *
-     * @param  DateTime|int                              $timestamp Instance of DateTime or UNIX timestamp.
-     * @return int                                       Timestamp
-     * @throws ResqueScheduler_InvalidTimestampException
+     * @param  DateTime|int              $timestamp Instance of DateTime or UNIX timestamp.
+     * @return int                       Timestamp
+     * @throws InvalidTimestampException
      */
     private static function getTimestamp($timestamp)
     {
@@ -196,7 +202,7 @@ class ResqueScheduler
         }
 
         if ((int) $timestamp != $timestamp) {
-            throw new ResqueScheduler_InvalidTimestampException(
+            throw new InvalidTimestampException(
                 'The supplied timestamp value could not be converted to an integer.'
             );
         }
@@ -208,7 +214,7 @@ class ResqueScheduler
      * Find the first timestamp in the delayed schedule before/including the timestamp.
      *
      * Will find and return the first timestamp upto and including the given
-     * timestamp. This is the heart of the ResqueScheduler that will make sure
+     * timestamp. This is the heart of the Scheduler that will make sure
      * that any jobs scheduled for the past when the worker wasn't running are
      * also queued up.
      *
@@ -253,16 +259,16 @@ class ResqueScheduler
     /**
      * Ensure that supplied job class/queue is valid.
      *
-     * @param  string           $class Name of job class.
-     * @param  string           $queue Name of queue.
-     * @throws Resque_Exception
+     * @param  string    $class Name of job class.
+     * @param  string    $queue Name of queue.
+     * @throws Exception
      */
     private static function validateJob($class, $queue)
     {
         if (empty($class)) {
-            throw new Resque_Exception('Jobs must be given a class.');
+            throw new Exception('Jobs must be given a class.');
         } elseif (empty($queue)) {
-            throw new Resque_Exception('Jobs must be put in a queue.');
+            throw new Exception('Jobs must be put in a queue.');
         }
 
         return true;
